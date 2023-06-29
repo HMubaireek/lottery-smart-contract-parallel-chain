@@ -1,0 +1,16 @@
+[package]
+name = "lottery_contract"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[lib]
+crate-type = ["cdylib"]
+
+[dependencies]
+rand = "0.8.5"
+base64 = "0.13"
+borsh = "=0.10.2"
+pchain-sdk = { git = "https://github.com/parallelchain-io/pchain-sdk.git" }
+getrandom = { version = "0.2.10", features = ["js"] }
