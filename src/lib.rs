@@ -1,6 +1,5 @@
-use pchain_sdk::{call, contract, contract_methods};
-use rand::Rng;
 use borsh::{BorshDeserialize, BorshSerialize};
+use pchain_sdk::{call, contract, contract_methods};
 
 type Address = [u8; 32];
 
@@ -111,8 +110,15 @@ impl LotteryContract {
     // Function to select a winner randomly
     #[call]
     fn select_winner(&self) -> Address {
-        let mut rng = rand::thread_rng();
-        let index = rng.gen_range(0..self.participants.len());
-        self.participants[index]
+        let random_index = Self::select_random_number(0, self.participants.len() as u32);
+        return self.participants[random_index];
+    }
+
+    fn select_random_number(start: u32, end: u32) -> usize {
+        let timestamp = pchain_sdk::blockchain::timestamp();
+        // Generate a random index based on the timestamp
+        let range = end - start + 1;
+        let random_index = (timestamp % range) + start;
+        return random_index as usize;
     }
 }
